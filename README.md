@@ -49,3 +49,4 @@ options:
   -C CO              Enumerate database to enumerate columns ( ex : --dump-all -T < tables name > -C < columns name >)
 ```
  - after thoroughly learning about the modes, to exploit SQL Injection on a certain SQL database error website, you use this command to extract the database name
+<img src="https://raw.githubusercontent.com/Phamchie/varsqli-pro/main/Img/Screenshot_2023-08-04-16-10-49-93.jpg">
