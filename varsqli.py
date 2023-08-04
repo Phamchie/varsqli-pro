@@ -1,4 +1,5 @@
 # V2.1.15 - Pro 
+# Cyber Security
 import requests
 import argparse
 import re
@@ -414,9 +415,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                             html_content = get_content.text
                                             find_checking = r"\b\w+::\b"
                                             find_all = re.findall(find_checking, html_content)
-                                            print(split_num)
                                             for column_dump in find_all:
-                                                tables_name = tables_dump.replace("::", "")
                                                 columns_name = column_dump.replace("::", "")
                                                 print("[INFO] fetching database tables on columns name : {}".format(columns_name))
                                                 time.sleep(0.30)
@@ -617,7 +616,6 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                             find_all = re.findall(find_checking, html_content)
                                             print(split_num)
                                             for column_dump in find_all:
-                                                tables_name = tables_dump.replace("::", "")
                                                 columns_name = column_dump.replace("::", "")
                                                 print("[INFO] fetching database tables on columns name : {}".format(columns_name))
                                                 time.sleep(0.30)
