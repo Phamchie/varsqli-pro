@@ -34,3 +34,18 @@ pyton3 setup.py
 python3 varsqli.py --help
 ```
 - Note: Make sure that you have the right to access and use this tool for its lawful purposes. Using this tool unethically or in violation of the law can have serious consequences. Please always follow the cybersecurity rules and regulations and use this tool responsibly
+### How To Used ?
+- To use this tool first, I will introduce the tool modes
+```
+options:
+  -h, --help         show this help message and exit
+  -u URL, --url URL  URL Target ( e.g : https://test.com?path_vuln.php?id=1)
+  --dbs              Enumerate DBMS databases
+  --tables           Enumerate DBMS database tables
+  --columns          Enumerate DBMS database table columns
+  -D DB              DBMS database to enumerate
+  --dump-all         Dump All DBMS database table columns
+  -T TB              Enumerate database to enumerate tables ( ex : --dump-all -T < tables name > -C < columns name >)
+  -C CO              Enumerate database to enumerate columns ( ex : --dump-all -T < tables name > -C < columns name >)
+```
+ - after thoroughly learning about the modes, to exploit SQL Injection on a certain SQL database error website, you use this command to extract the database name
