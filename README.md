@@ -75,3 +75,6 @@ python3 varsqli.py -u http://testphp.vulnweb.com/listproducts.php?cat=1 -D acuar
 ```
 - this command I will dump the `password` and `uname` to get the username and password
 - here is the result, password and user are test and test
+<img src="https://raw.githubusercontent.com/Phamchie/varsqli-pro/main/Img/Screenshot_2023-08-04-17-07-59-22.jpg">
+### ending
+- Remember, using VarSQLi-Pro or any similar tool for illegal activities can result in severe legal consequences, including imprisonment. It is crucial to prioritize ethical hacking practices, collaborate with security professionals, and comply with relevant laws and regulations to ensure responsible and lawful use of such tools.
