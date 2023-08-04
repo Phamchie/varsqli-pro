@@ -8,3 +8,27 @@ However, it is important to use this tool responsibly and within legal boundarie
 > When using VarSQLi-Pro or any other security testing tool, always adhere to rules and regulations. Protecting personal information and ensuring security is our responsibility and should be ensured in all online activities.
 
 >> Always strive to learn and understand security concepts to effectively protect web applications and databases.
+
+## Setup And install 
+- Step 1: Open a terminal or command prompt on your computer.
+
+- Step 2: Navigate to the folder where you want to store the VarSQLi-Pro source code.
+
+- Step 3: Run the following command to clone the source code from the Git repository:
+`git clone https://github.com/Phamchie/varsqli-pro`
+
+- Step 4: After the copying is complete, move to the newly created VarSQLi-Pro folder:
+`cd VarSQLi-Pro`
+
+- Step 5: Install the dependent libraries by running the following command:
+`pip install -r requirements.txt`
+
+- Step 6: After successful installation, you can run VarSQLi-Pro with the command:
+`python3 varsqli.py`
+```
+git clone https://github.com/Phamchie/varsqli-pro
+cd varsqli-pro
+pyton3 setup.py
+python3 varsqli.py --help
+```
+- Note: Make sure that you have the right to access and use this tool for its lawful purposes. Using this tool unethically or in violation of the law can have serious consequences. Please always follow the cybersecurity rules and regulations and use this tool responsibly
