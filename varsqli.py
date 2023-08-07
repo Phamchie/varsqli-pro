@@ -303,7 +303,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                             print(f"+-------------------+")
                                                             print(f"| {columns_name} : {dump_dbs}")
                                                             print(f"+-------------------+")
-                                                            exit()
+                                                            
                                                     dump()
                                         else:
                                             pass
@@ -604,7 +604,7 @@ varsqli identified the following injection point(s) with a total of 50 HTTP(s) r
                                                             print(f"+-------------------+")
                                                             print(f"| {columns_name} : {dump_dbs}")
                                                             print(f"+-------------------+")
-                                                            exit()
+                                                            
                                                     dump()
                                         else:
                                             pass
